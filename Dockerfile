@@ -1,5 +1,5 @@
 FROM alpine:3.7
-MAINTAINER Adrian Dvergsdal [atmoz.net]
+MAINTAINER hanz301/atmoz
 
 # Steps done in one RUN layer:
 # - Install packages

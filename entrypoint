@@ -6,6 +6,9 @@ userConfPath="/etc/sftp/users.conf"
 userConfPathLegacy="/etc/sftp-users.conf"
 userConfFinalPath="/var/run/sftp/users.conf"
 
+#List of users
+userList=$(cat "$userConfPath" |  sed -e "s/:.*//g")
+
 # Extended regular expression (ERE) for arguments
 reUser='[A-Za-z0-9._][A-Za-z0-9._-]{0,31}' # POSIX.1-2008
 rePass='[^:]{0,255}'
@@ -174,6 +177,16 @@ if [ ! -f "$userConfFinalPath" ]; then
         ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ''
     fi
 fi
+
+##Check the userList for user named sftp
+if userList = "sftp" ; then
+        echo "sftp user found, groupShareMount.sh will be executed"
+        ./groupShareMount.sh
+    else
+        echo "No user named sftp is found in users.conf, groupShareMount.sh will not be executed"
+    fi
+fi
+
 
 # Source custom scripts, if any
 if [ -d /etc/sftp.d ]; then

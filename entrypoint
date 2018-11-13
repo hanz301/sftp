@@ -75,6 +75,13 @@ function createUser() {
     mkdir -p /home/$user
     chown root:root /home/$user
     chmod 755 /home/$user
+    
+    # Added to enable logging
+    mkdir /home/$user/dev
+    chmod 755 /home/$user/dev
+    /etc/init.d/rsyslog start # create the socket
+    ln -f /home/sftp.log.socket /home/$user/dev/log
+    touch /var/log/sftp.log
 
     # Retrieving user id to use it in chown commands instead of the user name
     # to avoid problems on alpine when the user name contains a '.'

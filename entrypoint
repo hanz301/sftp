@@ -80,7 +80,14 @@ function createUser() {
     chmod 755 /home/$user
     
     # Added to enable logging
-    mkdir /home/$user/dev
+    if [ ! -d /home/$user/dev ]; then
+       mkdir /home/$user/dev; 
+    fi
+    else
+       echo "Users dev/ already exists"; fi
+    fi
+    
+    
     chmod 755 /home/$user/dev
     /etc/init.d/rsyslog start # create the socket
     ln -f /home/sftp.log.socket /home/$user/dev/log
